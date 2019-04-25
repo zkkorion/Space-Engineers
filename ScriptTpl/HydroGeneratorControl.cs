@@ -3,6 +3,7 @@ using Sandbox.Game.EntityComponents;
 using Sandbox.Common;
 using Sandbox.ModAPI.Ingame;
 using Sandbox.ModAPI.Interfaces;
+using SpaceEngineers.Game.Entities.Blocks;
 using SpaceEngineers.Game.ModAPI.Ingame;
 using System.Collections.Generic;
 using System.Collections;
@@ -21,7 +22,7 @@ namespace IngameScript
 {
     class HydroGeneratorControl : MyGridProgram
     {
-        public HydroGeneratorControl()
+        public Program()
         {
             Runtime.UpdateFrequency = UpdateFrequency.Update100;
         }
@@ -54,12 +55,12 @@ namespace IngameScript
                 curTotalCharge += battery.CurrentStoredPower;
             }
             curChargeValue = curTotalCharge / totalMaxCharge * 100;
-            if(curChargeValue < minValue)
-                foreach (IMyProductionBlock engine in engines)
-                    engine.Enabled = true;
+            if (curChargeValue < minValue)
+                foreach (IMyTerminalBlock engine in engines)
+                    engine.ApplyAction("OnOff_On");
             if (curChargeValue > maxValue)
-                foreach (IMyGasGenerator engine in engines)
-                    engine.Enabled = false;
+                foreach (IMyTerminalBlock engine in engines)
+                    engine.ApplyAction("OnOff_Off");
         }
     }
 }
