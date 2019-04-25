@@ -41,10 +41,10 @@ namespace IngameScript
                 }
             }
             List<IMyBatteryBlock> batteries = new List<IMyBatteryBlock>();
-            List<IMyGasGenerator> generators = new List<IMyGasGenerator>();
+            List<IMyTerminalBlock> engines = new List<IMyTerminalBlock>();
 
             GridTerminalSystem.GetBlocksOfType(batteries);
-            GridTerminalSystem.GetBlocksOfType(generators);
+            GridTerminalSystem.SearchBlocksOfName("engine", engines);
 
             float totalMaxCharge = 0, curTotalCharge = 0, curChargeValue;
             
@@ -55,11 +55,11 @@ namespace IngameScript
             }
             curChargeValue = curTotalCharge / totalMaxCharge * 100;
             if(curChargeValue < minValue)
-                foreach (IMyGasGenerator generator in generators)
-                    generator.Enabled = true;
+                foreach (IMyProductionBlock engine in engines)
+                    engine.Enabled = true;
             if (curChargeValue > maxValue)
-                foreach (IMyGasGenerator generator in generators)
-                    generator.Enabled = false;
+                foreach (IMyGasGenerator engine in engines)
+                    engine.Enabled = false;
         }
     }
 }
