@@ -37,18 +37,19 @@ namespace IngameScript
                 bool minVS = int.TryParse(range[0], out minValue);
                 bool maxVS = int.TryParse(range[1], out maxValue);
                 if(!minVS || !maxVS)
-                {
                     Echo("Wrong value of argument. Need format: 10-20 (beatwen number can be: , . : ; \\ | / - –). Range will be set to default");
-                }
             }
             List<IMyBatteryBlock> batteries = new List<IMyBatteryBlock>();
             List<IMyTerminalBlock> engines = new List<IMyTerminalBlock>();
-
+            IMyBlockGroup group = GridTerminalSystem.GetBlockGroupWithName("HydrogenEngines");
+            if (group == null)
+            {
+                Echo("Group not found");
+                return;
+            }
             GridTerminalSystem.GetBlocksOfType(batteries);
-            GridTerminalSystem.SearchBlocksOfName("engine", engines);
-
+            group.GetBlocks(engines);
             float totalMaxCharge = 0, curTotalCharge = 0, curChargeValue;
-            
             foreach (IMyBatteryBlock battery in batteries)
             {
                 totalMaxCharge += battery.MaxStoredPower;
