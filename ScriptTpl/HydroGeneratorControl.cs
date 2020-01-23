@@ -29,18 +29,11 @@ namespace IngameScript
         {
             int minValue = 30;
             int maxValue = 90;
-            char[] delimiterChars = { ',', '.', ':', ';', '\\', '|', '/', '-', '–'};
-            if(!string.IsNullOrEmpty(argument))
-            {
-                string[] range = argument.Split(delimiterChars);
-                bool minVS = int.TryParse(range[0], out minValue);
-                bool maxVS = int.TryParse(range[1], out maxValue);
-                if(!minVS || !maxVS)
-                    Echo("Wrong value of argument. Need format: 10-20 (beatwen number can be: , . : ; \\ | / - –). Range will be set to default");
-            }
+            string defaultGroupName = "hydroEngines";
+            Echo("Default group name of hydrogen engines is hydroEngines, default min value - 30%, max value - 90%. You can use yourself setting by change it in script.");
             List<IMyBatteryBlock> batteries = new List<IMyBatteryBlock>();
             List<IMyTerminalBlock> engines = new List<IMyTerminalBlock>();
-            IMyBlockGroup group = GridTerminalSystem.GetBlockGroupWithName("HydrogenEngines");
+            IMyBlockGroup group = GridTerminalSystem.GetBlockGroupWithName(defaultGroupName);
             if (group == null)
             {
                 Echo("Group not found");
