@@ -10,7 +10,6 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System;
-using VRage.Collections;
 using VRage.Game.Components;
 using VRage.Game.ModAPI.Ingame;
 using VRage.Game.ModAPI.Ingame.Utilities;
@@ -22,14 +21,14 @@ namespace IngameScript
 {
     class HydroGeneratorControl : MyGridProgram
     {
-        public Program()
+        public void Program()
         {
             Runtime.UpdateFrequency = UpdateFrequency.Update100;
         }
         public void Main(string argument, UpdateType updateSource)
         {
             int minValue = 30;
-            int maxValue = 50;
+            int maxValue = 90;
             char[] delimiterChars = { ',', '.', ':', ';', '\\', '|', '/', '-', '–'};
             if(!string.IsNullOrEmpty(argument))
             {
