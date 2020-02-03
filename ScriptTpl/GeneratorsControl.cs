@@ -19,7 +19,7 @@ using VRageMath;
 
 namespace IngameScript
 {
-    class HydroGeneratorControl : MyGridProgram
+    class GeneratorsControl : MyGridProgram
     {
         public void Program()
         {
@@ -29,10 +29,10 @@ namespace IngameScript
         {
             int minValue = 30;
             int maxValue = 90;
-            string defaultGroupName = "hydroEngines";
-            Echo("Default group name of hydrogen engines is hydroEngines, default min value - 30%, max value - 90%. You can use yourself setting by change it in script.");
+            string defaultGroupName = "Generators";
+            Echo("Default group name is 'Generators', default min value - 30%, max value - 90%. You can use yourself setting by change it in script.");
             List<IMyBatteryBlock> batteries = new List<IMyBatteryBlock>();
-            List<IMyTerminalBlock> engines = new List<IMyTerminalBlock>();
+            List<IMyTerminalBlock> generators = new List<IMyTerminalBlock>();
             IMyBlockGroup group = GridTerminalSystem.GetBlockGroupWithName(defaultGroupName);
             if (group == null)
             {
@@ -40,7 +40,7 @@ namespace IngameScript
                 return;
             }
             GridTerminalSystem.GetBlocksOfType(batteries);
-            group.GetBlocks(engines);
+            group.GetBlocks(generators);
             float totalMaxCharge = 0, curTotalCharge = 0, curChargeValue;
             foreach (IMyBatteryBlock battery in batteries)
             {
@@ -49,10 +49,10 @@ namespace IngameScript
             }
             curChargeValue = curTotalCharge / totalMaxCharge * 100;
             if (curChargeValue < minValue)
-                foreach (IMyTerminalBlock engine in engines)
+                foreach (IMyTerminalBlock engine in generators)
                     engine.ApplyAction("OnOff_On");
             if (curChargeValue > maxValue)
-                foreach (IMyTerminalBlock engine in engines)
+                foreach (IMyTerminalBlock engine in generators)
                     engine.ApplyAction("OnOff_Off");
         }
     }
